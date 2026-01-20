@@ -4,11 +4,7 @@ function Footer() {
   return (
     <footer style={{ backgroundColor: "rgb(250, 250, 250)" }}>
       <div className="container p-3 border-top mt-5">
-
-        {/* MAIN 5/7 SPLIT */}
         <div className="row p-5">
-
-          {/* LEFT SIDE (col-5) */}
           <div className="col-4 p-1">
             <img src="media/images/logo.svg" style={{ width: "40%", marginLeft: "90px" }} alt="Logo" />
 
@@ -17,12 +13,10 @@ function Footer() {
               All rights reserved.
             </p>
           </div>
-
-          {/* RIGHT SIDE (col-7) */}
           <div className="col-8 p-1"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",   // exact equal 4 columns
+              gridTemplateColumns: "repeat(4, 1fr)",
               gap: "16px",
               alignItems: "flex-start",
               minWidth: 0
@@ -128,7 +122,7 @@ function Footer() {
           </div>
         </div>
 
-        {/* BOTTOM DESCRIPTION (same left/right boundary) */}
+        {/* BOTTOM DESCRIPTION */}
         <div className="row p-5 pt-0 text-muted" style={{ fontSize: "12px", lineHeight: "18px" }}>
           <div className="col-12">
             <p>Zerodha Broking Ltd.: Member of NSE, BSE & MCX – SEBI Registration no.: INZ000031633...</p>
