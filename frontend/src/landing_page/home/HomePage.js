@@ -12,13 +12,11 @@ import Footer from '../Footer';
 function HomePage() {
   return (
     <>
-      <Navbar />
       <Hero />
       <Stats />
       <Pricing />
       <Education />
       <OpenAccount />
-      <Footer />
     </>
   );
 }

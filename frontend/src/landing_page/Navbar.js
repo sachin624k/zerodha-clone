@@ -1,35 +1,32 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     return (
-        <nav class="navbar navbar-expand-lg border-bottom sticky-top" style={{ backgroundColor: "#FFF" }} >
-            <div class="container p-2">
-                <a class="navbar-brand" href="#"><img src="media/images/logo.svg" style={{ width: "25%" }} alt="Logo"/></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <nav className="navbar border-bottom sticky-top" style={{ backgroundColor: "#FFF" }}>
+            <div className="container p-2 d-flex align-items-center justify-content-between">
 
-                    <form class="d-flex" role="search">
-                        <ul class="navbar-nav mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Signup</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Product</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Pricing</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Support</a>
-                            </li>
-                        </ul>
-                    </form>
+                {/* LOGO */}
+                <Link className="navbar-brand" to="/">
+                    <img src="media/images/logo.svg" style={{ width: "25%" }} alt="Logo"/>
+                </Link>
+
+                {/* NAV LINKS ALWAYS VISIBLE */}
+                <ul className="navbar-nav d-flex flex-row text-mutaed fs-6 gap-4 mb-0">
+                    <li className="nav-item"><Link className="nav-link active" to="/signup">Signup</Link></li>
+                    <li className="nav-item"><Link className="nav-link active" to="/about">About</Link></li>
+                    <li className="nav-item"><Link className="nav-link active" to="/products">Products</Link></li>
+                    <li className="nav-item"><Link className="nav-link active" to="/pricing">Pricing</Link></li>
+                    <li className="nav-item"><Link className="nav-link active" to="/support">Support</Link></li>
+                </ul>
+
+                {/* HAMBURGER ALWAYS ON SCREEN */}
+                <div className="hamburger cursor-pointer d-flex flex-column justify-content-between" style={{ width: "22px", height: "16px" }}>
+                    <span style={{ height: "2px", background: "#000" }}></span>
+                    <span style={{ height: "2px", background: "#000" }}></span>
+                    <span style={{ height: "2px", background: "#000" }}></span>
                 </div>
+
             </div>
         </nav>
     );

@@ -9,10 +9,8 @@ import Footer from '../Footer';
 function HomePage() {
   return (
     <>
-      <Navbar />
       <Home />
       <Brokerage />
-      <Footer />
     </>
   );
 }

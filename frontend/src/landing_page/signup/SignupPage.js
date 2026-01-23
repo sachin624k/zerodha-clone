@@ -8,9 +8,7 @@ import Footer from '../Footer';
 function HomePage() {
   return (
     <>
-      <Navbar />
       <Signup />
-      <Footer />
     </>
   );
 }
