@@ -1,16 +1,12 @@
 import React from 'react';
-
 import Home from './Home';
-import Brokerage from './Brokerage';
-
-import Navbar from '../Navbar';
-import Footer from '../Footer';
+import OpenAccount from '../OpenAccount';
 
 function HomePage() {
   return (
     <>
       <Home />
-      <Brokerage />
+      <OpenAccount />
     </>
   );
 }
