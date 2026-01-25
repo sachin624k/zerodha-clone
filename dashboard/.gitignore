@@ -1,0 +1,43 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# MacOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# caches
+.cache/
+__pycache__/
+*.pyc
+
+# lock files (optional)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Vercel/Netlify (if deploy later)
+.vercel/
+.netlify/
+
+# Typescript (if later)
+*.tsbuildinfo
