@@ -26,12 +26,12 @@ const WatchList = () => {
         label: "Price",
         data: watchlist.map((stock) => stock.price),
         backgroundColor: [
-          "rgba(255, 99, 132, 0.5)",
-          "rgba(54, 162, 235, 0.5)",
-          "rgba(255, 206, 86, 0.5)",
-          "rgba(75, 192, 192, 0.5)",
-          "rgba(153, 102, 255, 0.5)",
-          "rgba(255, 159, 64, 0.5)",
+          "rgba(255, 99, 133, 0.5)",
+          "rgba(54, 162, 234, 0.5)",
+          "rgba(255, 206, 85, 0.5)",
+          "rgba(75, 192, 193, 0.5)",
+          "rgba(153, 102, 254, 0.5)",
+          "rgba(255, 159, 65, 0.5)",
         ],
         borderColor: [
           "rgba(255, 99, 132, 1)",
