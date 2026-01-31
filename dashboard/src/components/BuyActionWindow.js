@@ -1,68 +1,86 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState, useContext } from "react";
 import axios from "axios";
-
 import GeneralContext from "./GeneralContext";
-
 import "./BuyActionWindow.css";
 
-const BuyActionWindow = ({ uid }) => {
-  const [stockQuantity, setStockQuantity] = useState(1);
-  const [stockPrice, setStockPrice] = useState(0.0);
+const BuyActionWindow = ({ uid, mode = "BUY" }) => {
+  const { closeBuyWindow } = useContext(GeneralContext);
 
-  const handleBuyClick = () => {
-    axios.post("http://localhost:3002/newOrder", {
-      name: uid,
-      qty: stockQuantity,
-      price: stockPrice,
-      mode: "BUY",
-    });
+  const [qty, setQty] = useState(1);
+  const [price, setPrice] = useState("");
 
-    GeneralContext.closeBuyWindow();
-  };
+  const handleSubmit = async () => {
+    if (qty <= 0) {
+      alert("Quantity must be greater than 0");
+      return;
+    }
 
-  const handleCancelClick = () => {
-    GeneralContext.closeBuyWindow();
+    if (!price || price <= 0) {
+      alert("Enter a valid price");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:3002/newOrder", {
+        name: uid,
+        qty: Number(qty),
+        price: Number(price),
+        mode,
+      });
+
+      closeBuyWindow();
+    } catch (err) {
+      console.error("ORDER ERROR 👉", err);
+      alert(err.response?.data || "Order failed");
+    }
   };
 
   return (
-    <div className="container" id="buy-window" draggable="true">
-      <div className="regular-order">
-        <div className="inputs">
-          <fieldset>
-            <legend>Qty.</legend>
-            <input
-              type="number"
-              name="qty"
-              id="qty"
-              onChange={(e) => setStockQuantity(e.target.value)}
-              value={stockQuantity}
-            />
-          </fieldset>
-          <fieldset>
-            <legend>Price</legend>
-            <input
-              type="number"
-              name="price"
-              id="price"
-              step="0.05"
-              onChange={(e) => setStockPrice(e.target.value)}
-              value={stockPrice}
-            />
-          </fieldset>
+    <div className="buy-window-overlay">
+      <div className="buy-window">
+        {/* HEADER */}
+        <div className={`buy-header ${mode === "SELL" ? "sell" : "buy"}`}>
+          {uid} {mode}
         </div>
-      </div>
 
-      <div className="buttons">
-        <span>Margin required ₹140.65</span>
-        <div>
-          <Link className="btn btn-blue" onClick={handleBuyClick}>
-            Buy
-          </Link>
-          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+        {/* BODY */}
+        <div className="buy-body">
+          <div className="field">
+            <label>Quantity</label>
+            <input
+              type="number"
+              min="1"
+              value={qty}
+              onChange={(e) => setQty(e.target.value)}
+            />
+          </div>
+
+          <div className="field">
+            <label>Price</label>
+            <input
+              type="number"
+              min="1"
+              placeholder="Enter price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </div>
+
+          <p className="margin">Margin required ₹140.65</p>
+        </div>
+
+        {/* FOOTER */}
+        <div className="buy-footer">
+          <button
+            className={`action-btn ${mode === "SELL" ? "sell" : "buy"}`}
+            onClick={handleSubmit}
+          >
+            {mode}
+          </button>
+
+          <button className="action-btn cancel" onClick={closeBuyWindow}>
             Cancel
-          </Link>
+          </button>
         </div>
       </div>
     </div>

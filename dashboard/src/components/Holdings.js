@@ -1,12 +1,46 @@
-import React, { useState } from "react";
-import { holdings } from "../data/data";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { VerticalGraph } from "./VerticalGraph";
 
 const Holdings = () => {
-  const [allHoldings] = useState(holdings);
+  const [allHoldings, setAllHoldings] = useState([]);
+  const [newOrders, setNewOrders] = useState([]);
 
+  useEffect(() => {
+    /* OLD HOLDINGS */
+    axios.get("http://localhost:3002/allHoldings")
+      .then((res) => setAllHoldings(res.data));
+
+    /* NET NEW PURCHASES (BUY - SELL) */
+    axios.get("http://localhost:3002/allOrders")
+      .then((res) => {
+        const netMap = {};
+
+        res.data.forEach(order => {
+          if (!netMap[order.name]) {
+            netMap[order.name] = 0;
+          }
+
+          if (order.mode === "BUY") {
+            netMap[order.name] += order.qty;
+          } else {
+            netMap[order.name] -= order.qty;
+          }
+        });
+
+        const netPurchases = Object.entries(netMap)
+          .filter(([_, qty]) => qty > 0)
+          .map(([name, qty]) => ({
+            name,
+            qty
+          }));
+
+        setNewOrders(netPurchases);
+      });
+  }, []);
+
+  /* GRAPH */
   const labels = allHoldings.map((stock) => stock.name);
-
   const data = {
     labels,
     datasets: [
@@ -20,6 +54,7 @@ const Holdings = () => {
 
   return (
     <>
+      {/* HOLDINGS */}
       <h3 className="title">Holdings ({allHoldings.length})</h3>
 
       <div className="order-table">
@@ -27,60 +62,51 @@ const Holdings = () => {
           <thead>
             <tr>
               <th>Instrument</th>
-              <th>Qty.</th>
-              <th>Avg. cost</th>
+              <th>Qty</th>
+              <th>Avg</th>
               <th>LTP</th>
-              <th>Cur. val</th>
-              <th>P&L</th>
-              <th>Net chg.</th>
-              <th>Day chg.</th>
             </tr>
           </thead>
-
           <tbody>
-            {allHoldings.map((stock, index) => {
-              const curValue = stock.price * stock.qty;
-              const isProfit = curValue - stock.avg * stock.qty >= 0;
-              const profClass = isProfit ? "profit" : "loss";
-              const dayClass = stock.isLoss ? "loss" : "profit";
-
-              return (
-                <tr key={index}>
-                  <td>{stock.name}</td>
-                  <td>{stock.qty}</td>
-                  <td>{stock.avg.toFixed(2)}</td>
-                  <td>{stock.price.toFixed(2)}</td>
-                  <td>{curValue.toFixed(2)}</td>
-                  <td className={profClass}>
-                    {(curValue - stock.avg * stock.qty).toFixed(2)}
-                  </td>
-                  <td className={profClass}>{stock.net}</td>
-                  <td className={dayClass}>{stock.day}</td>
-                </tr>
-              );
-            })}
+            {allHoldings.map((stock, index) => (
+              <tr key={index}>
+                <td>{stock.name}</td>
+                <td>{stock.qty}</td>
+                <td>{stock.avg.toFixed(2)}</td>
+                <td>{stock.price.toFixed(2)}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <div className="row">
-        <div className="col">
-          <h5>
-            29,875<span>55</span>
-          </h5>
-          <p>Total investment</p>
+      {/* NEW PURCHASES */}
+      <h3 className="title" style={{ marginTop: "40px" }}>
+        New Purchases ({newOrders.length})
+      </h3>
+
+      {newOrders.length === 0 ? (
+        <p>No new purchases today</p>
+      ) : (
+        <div className="order-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Instrument</th>
+                <th>Net Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              {newOrders.map((order, index) => (
+                <tr key={index}>
+                  <td>{order.name}</td>
+                  <td>{order.qty}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <div className="col">
-          <h5>
-            31,428<span>95</span>
-          </h5>
-          <p>Current value</p>
-        </div>
-        <div className="col">
-          <h5>1,553.40 (+5.20%)</h5>
-          <p>P&L</p>
-        </div>
-      </div>
+      )}
 
       <VerticalGraph data={data} />
     </>

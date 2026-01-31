@@ -2,14 +2,20 @@ require('dotenv').config(); //This line helps to get values of .env
 
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-// const { HoldingsModel } = require('./model/HoldingsModel');
+const { HoldingsModel } = require('./model/HoldingsModel');
 const { PositionsModel } = require('./model/PositionsModel');
+const { OrdersModel } = require('./model/OrdersModel');
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
 const app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
 
 // app.get('/addHoldings', async (req, res) => {
 //     let tempHoldings = [
@@ -139,49 +145,155 @@ const app = express();
 //     res.send("Done!");
 // });
 
-app.get('/addPositions', async (req, res) => {
-    let tempPositions = [
-        {
-            product: "CNC",
-            name: "EVEREADY",
-            qty: 2,
-            avg: 316.27,
-            price: 312.35,
-            net: "+0.58%",
-            day: "-1.24%",
-            isLoss: true,
-        },
-        {
-            product: "CNC",
-            name: "JUBLFOOD",
-            qty: 1,
-            avg: 3124.75,
-            price: 3082.65,
-            net: "+10.04%",
-            day: "-1.35%",
-            isLoss: true,
-        },
-    ];
+// app.get('/addPositions', async (req, res) => {
+//     let tempPositions = [
+//         {
+//             product: "CNC",
+//             name: "EVEREADY",
+//             qty: 2,
+//             avg: 316.27,
+//             price: 312.35,
+//             net: "+0.58%",
+//             day: "-1.24%",
+//             isLoss: true,
+//         },
+//         {
+//             product: "CNC",
+//             name: "JUBLFOOD",
+//             qty: 1,
+//             avg: 3124.75,
+//             price: 3082.65,
+//             net: "+10.04%",
+//             day: "-1.35%",
+//             isLoss: true,
+//         },
+//     ];
 
-    tempPositions.forEach((item) => {
-        let newPosition = new PositionsModel({
-            product: item.product,
-            name: item.name,
-            qty: item.qty,
-            avg: item.avg,
-            price: item.price,
-            net: item.net,
-            day: item.day,
-            isLoss: item.isLoss,
+//     tempPositions.forEach((item) => {
+//         let newPosition = new PositionsModel({
+//             product: item.product,
+//             name: item.name,
+//             qty: item.qty,
+//             avg: item.avg,
+//             price: item.price,
+//             net: item.net,
+//             day: item.day,
+//             isLoss: item.isLoss,
+//         });
+
+//         newPosition.save();
+//     });
+//     res.send("Done!");
+// });
+
+app.get("/allHoldings", async (req, res) => {
+  const holdings = await HoldingsModel.find({});
+
+  const aggregated = {};
+
+  holdings.forEach((h) => {
+    if (!aggregated[h.name]) {
+      aggregated[h.name] = {
+        name: h.name,
+        qty: h.qty,
+        avg: h.avg,
+        price: h.price,
+        net: h.net,
+        day: h.day,
+      };
+    } else {
+      const existing = aggregated[h.name];
+
+      const totalQty = existing.qty + h.qty;
+      const weightedAvg =
+        (existing.avg * existing.qty + h.avg * h.qty) / totalQty;
+
+      existing.qty = totalQty;
+      existing.avg = Number(weightedAvg.toFixed(2));
+      existing.price = h.price;
+    }
+  });
+
+  res.json(Object.values(aggregated));
+});
+
+app.get('/allPositions', async (req, res) => {
+     let allPositions = await PositionsModel.find({});
+     res.json(allPositions);
+});
+
+app.get("/allOrders", async (req, res) => {
+  let allOrders = await OrdersModel.find({});
+  res.json(allOrders);
+});
+
+app.post("/newOrder", async (req, res) => {
+  const { name, qty, price, mode } = req.body;
+
+  if (!name || qty <= 0 || price <= 0) {
+    return res.status(400).send("Invalid qty or price");
+  }
+
+  try {
+    await OrdersModel.create({ name, qty, price, mode });
+
+    const holding = await HoldingsModel.findOne({ name });
+
+    if (mode === "BUY") {
+      if (holding) {
+        const totalQty = holding.qty + qty;
+        const newAvg =
+          (holding.avg * holding.qty + price * qty) / totalQty;
+
+        holding.qty = totalQty;
+        holding.avg = Number(newAvg.toFixed(2));
+        holding.price = price;
+
+        const netPct = ((price - holding.avg) / holding.avg) * 100;
+        holding.net = `${netPct.toFixed(2)}%`;
+        holding.day = "0.00%";
+
+        await holding.save();
+      } else {
+        await HoldingsModel.create({
+          name,
+          qty,
+          avg: price,
+          price,
+          net: "0.00%",
+          day: "0.00%",
         });
+      }
+    }
 
-        newPosition.save();
-    });
-    res.send("Done!");
+    if (mode === "SELL") {
+      if (!holding || holding.qty < qty) {
+        return res.status(400).send("Not enough quantity to sell");
+      }
+
+      holding.qty -= qty;
+      holding.price = price;
+
+      if (holding.qty === 0) {
+        await HoldingsModel.deleteOne({ name });
+      } else {
+        const netPct = ((price - holding.avg) / holding.avg) * 100;
+        holding.net = `${netPct.toFixed(2)}%`;
+        holding.day = "0.00%";
+
+        await holding.save();
+      }
+    }
+
+    res.status(200).send("Order executed successfully");
+  } catch (err) {
+    console.error("ORDER ERROR 👉", err.message);
+    res.status(500).send("Order failed");
+  }
 });
 
 app.listen(PORT, () => {
-    console.log("App started!");
-    mongoose.connect(uri);
-    console.log("DB connected!");
+     console.log("App started!");
+     mongoose.connect(uri);
+     console.log("DB connected!");
 });
