@@ -25,13 +25,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-// ... existing imports
-
 root.render(
   <CookiesProvider>
     <BrowserRouter>
       <Routes>
-        {/* Everything inside this Route will have the Navbar and Footer */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -40,7 +37,6 @@ root.render(
           <Route path="/support" element={<SupportPage />} />
           <Route path="/signup" element={<LandingSignup />} />
 
-          {/* 🔥 These now get the layout too */}
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/signup" element={<Signup />} />
         </Route>
@@ -51,7 +47,7 @@ root.render(
       <ToastContainer
         position="top-right"
         autoClose={3000}
-        hideProgressBar={true} // Cleaner look
+        hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
         theme="light"

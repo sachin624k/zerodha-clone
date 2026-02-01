@@ -35,7 +35,7 @@ const Home = () => {
       { withCredentials: true }
     );
 
-    navigate("/", { replace: true }); // ✅ FRONTEND LANDING
+    navigate("/", { replace: true });
   };
 
   return (

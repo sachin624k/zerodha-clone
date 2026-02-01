@@ -10,7 +10,6 @@ const Home = () => {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        // 🔥 CRITICAL: withCredentials must be true
         const res = await axios.post(
           "http://localhost:3002/auth", 
           {}, 
@@ -20,7 +19,6 @@ const Home = () => {
         if (res.data.status) {
           setIsAuthenticated(true);
         } else {
-          // If auth fails, send back to the login app on port 3000
           window.location.replace("http://localhost:3000/auth/login");
         }
       } catch (err) {

@@ -2,7 +2,6 @@ import React from 'react';
 
 function Footer() {
 
-  // common bottom paragraph style
   const bottomParaStyle = {
     fontSize: "9px",
     marginLeft: "75px",

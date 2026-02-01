@@ -5,7 +5,6 @@ import axios from "axios";
 import "./index.css";
 import Home from "./components/Home";
 
-/* 🔥 CRITICAL: allow cookies in dashboard app */
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
