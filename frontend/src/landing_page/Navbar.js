@@ -1,35 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Navbar() {
-    return (
-        <nav className="navbar border-bottom sticky-top" style={{ backgroundColor: "#FFF" }}>
-            <div className="container p-2 d-flex align-items-center justify-content-between">
+  const [loggedIn, setLoggedIn] = useState(false);
 
-                {/* LOGO */}
-                <Link className="navbar-brand" to="/">
-                    <img src="media/images/logo.svg" style={{ width: "25%" }} alt="Logo"/>
-                </Link>
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:3002/auth",
+          {},
+          { withCredentials: true }
+        );
+        setLoggedIn(data.status);
+      } catch {
+        setLoggedIn(false);
+      }
+    };
 
-                {/* NAV LINKS ALWAYS VISIBLE */}
-                <ul className="navbar-nav d-flex flex-row text-mutaed fs-6 gap-4 mb-0">
-                    <li className="nav-item"><Link className="nav-link active" to="/signup">Signup</Link></li>
-                    <li className="nav-item"><Link className="nav-link active" to="/about">About</Link></li>
-                    <li className="nav-item"><Link className="nav-link active" to="/products">Products</Link></li>
-                    <li className="nav-item"><Link className="nav-link active" to="/pricing">Pricing</Link></li>
-                    <li className="nav-item"><Link className="nav-link active" to="/support">Support</Link></li>
-                </ul>
+    checkAuth();
+  }, []);
 
-                {/* HAMBURGER ALWAYS ON SCREEN */}
-                <div className="hamburger cursor-pointer d-flex flex-column justify-content-between" style={{ width: "22px", height: "16px" }}>
-                    <span style={{ height: "2px", background: "#000" }}></span>
-                    <span style={{ height: "2px", background: "#000" }}></span>
-                    <span style={{ height: "2px", background: "#000" }}></span>
-                </div>
+  return (
+    <nav className="navbar border-bottom sticky-top bg-white">
+      <div className="container d-flex justify-content-between align-items-center">
 
-            </div>
-        </nav>
-    );
+        <Link className="navbar-brand" to="/">
+          <img src="media/images/logo.svg" width="120" alt="logo" />
+        </Link>
+
+        <ul className="navbar-nav d-flex flex-row gap-4 mb-0">
+          {!loggedIn && (
+            <li><Link className="nav-link" to="/auth/signup">Signup</Link></li>
+          )}
+
+          {loggedIn && (
+            <li>
+              <a className="nav-link" href="http://localhost:3001">
+                Dashboard
+              </a>
+            </li>
+          )}
+
+          <li><Link className="nav-link" to="/about">About</Link></li>
+          <li><Link className="nav-link" to="/products">Products</Link></li>
+          <li><Link className="nav-link" to="/pricing">Pricing</Link></li>
+          <li><Link className="nav-link" to="/support">Support</Link></li>
+        </ul>
+
+      </div>
+    </nav>
+  );
 }
 
 export default Navbar;

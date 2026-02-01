@@ -15,3 +15,193 @@ code {
 .nav-link {
   margin-left: 40px;
 }
+
+/* ===== AUTH CONTENT (INSIDE NORMAL PAGE) ===== */
+
+.auth-page {
+  min-height: calc(100vh - 120px); /* navbar + footer space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+}
+
+.auth-box {
+  width: 380px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Headings */
+.auth-box h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1c1c1c;
+}
+
+/* Inputs */
+.auth-box input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.auth-box input:focus {
+  border-color: #387ed1;
+}
+
+/* Button */
+.auth-box button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  font-size: 14px;
+  background: #387ed1;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-box button:hover {
+  background: #2f6fc2;
+}
+
+/* Link text */
+.auth-box span {
+  display: block;
+  margin-top: 14px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.auth-box a {
+  color: #387ed1;
+  text-decoration: none;
+}
+
+/* Ensure the auth page takes up space between Navbar and Footer */
+.auth-page {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0; /* Prevents sticking to Navbar */
+}
+
+/* Fix for the Dashboard layout in dashboard/src/index.css */
+.topbar-container {
+  /* This ensures the navbar spans the full browser width */
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+/* Container to center everything between Navbar and Footer */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #fff;
+}
+
+/* The Login/Signup Card */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.auth-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 35px;
+}
+
+/* Inputs */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  color: #444;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4184f3; /* Zerodha blue */
+}
+
+/* The Button */
+.auth-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #4184f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.auth-submit-btn:hover {
+  background-color: #3570d1;
+}
+
+/* Links and Footer */
+.auth-footer {
+  margin-top: 25px;
+  font-size: 14px;
+}
+
+.auth-footer p {
+  margin-top: 15px;
+  color: #9b9b9b;
+}
+
+.auth-link {
+  color: #9b9b9b;
+  text-decoration: none;
+  display: block;
+}
+
+.auth-link:hover {
+  color: #4184f3;
+}
+
+.auth-link-bold {
+  color: #4184f3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.Toastify__toast {
+  border-radius: 4px;
+  font-family: sans-serif;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.Toastify__toast--success {
+  background: #4caf50; /* Zerodha Green */
+  color: #fff;
+}

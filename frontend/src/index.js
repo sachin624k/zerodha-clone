@@ -1,32 +1,61 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
+import "./index.css";
 
-import HomePage from './landing_page/home/HomePage';
-import SignUp from "./landing_page/signup/Signup"
-import AboutPage from "./landing_page/about/AboutPage"
-import ProductPage from "./landing_page/products/ProductsPage"
-import PricingPage from "./landing_page/pricing/PricingPage"
-import SupportPage from "./landing_page/support/SupportPage"
+/* Layout */
+import MainLayout from "./layouts/MainLayout";
 
-import NotFound from "./landing_page/NotFound"
-import Navbar from './landing_page/Navbar';
-import Footer from './landing_page/Footer';
+/* Landing pages */
+import HomePage from "./landing_page/home/HomePage";
+import LandingSignup from "./landing_page/signup/Signup";
+import AboutPage from "./landing_page/about/AboutPage";
+import ProductPage from "./landing_page/products/ProductsPage";
+import PricingPage from "./landing_page/pricing/PricingPage";
+import SupportPage from "./landing_page/support/SupportPage";
+import NotFound from "./landing_page/NotFound";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+/* Auth pages */
+import Login from "./auth/Login";
+import Signup from "./auth/Signup";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// ... existing imports
+
 root.render(
-  <BrowserRouter>
-  <Navbar />
-  <Routes>
-    <Route path='/' element={<HomePage />}/>
-    <Route path='/signup' element={<SignUp />}/>
-    <Route path='/about' element={<AboutPage />}/>
-    <Route path='/products' element={<ProductPage />}/>
-    <Route path='/pricing' element={<PricingPage />}/>
-    <Route path='/support' element={<SupportPage />}/>
-    <Route path='*' element={<NotFound />}/>
-  </Routes>
-  <Footer />
-  </BrowserRouter>
+  <CookiesProvider>
+    <BrowserRouter>
+      <Routes>
+        {/* Everything inside this Route will have the Navbar and Footer */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/signup" element={<LandingSignup />} />
+
+          {/* 🔥 These now get the layout too */}
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/signup" element={<Signup />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={true} // Cleaner look
+        newestOnTop={false}
+        closeOnClick
+        theme="light"
+      />
+    </BrowserRouter>
+  </CookiesProvider>
 );
