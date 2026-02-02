@@ -21,9 +21,8 @@ module.exports.Signup = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      path: "/",
+      secure: true,
+      sameSite: "None",
     });
 
     res.status(201).json({
@@ -85,8 +84,8 @@ module.exports.Login = async (req, res) => {
 module.exports.Logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: "lax",
-    secure: false,
+    secure: true,
+    sameSite: "None",
   });
 
   res.status(200).json({ success: true });
