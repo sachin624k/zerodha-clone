@@ -28,8 +28,7 @@ const Signup = () => {
       if (data.success) {
         toast.success("Signup successful");
         setTimeout(() => {
-          window.location.href =
-            process.env.REACT_APP_DASHBOARD_URL;
+          window.location.href = "https://zerodha-dashboard-psi.vercel.app";
         }, 800);
       } else {
         toast.error(data.message);
