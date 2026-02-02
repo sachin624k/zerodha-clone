@@ -11,18 +11,22 @@ const Home = () => {
     const verifyAuth = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:3002/auth", 
-          {}, 
+          `${process.env.REACT_APP_API_URL}/auth`,
+          {},
           { withCredentials: true }
         );
 
         if (res.data.status) {
           setIsAuthenticated(true);
         } else {
-          window.location.replace("http://localhost:3000/auth/login");
+          window.location.replace(
+            `${process.env.REACT_APP_FRONTEND_URL}/auth/login`
+          );
         }
       } catch (err) {
-        window.location.replace("http://localhost:3000/auth/login");
+        window.location.replace(
+          `${process.env.REACT_APP_FRONTEND_URL}/auth/login`
+        );
       } finally {
         setAuthChecked(true);
       }
