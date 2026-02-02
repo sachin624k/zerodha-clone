@@ -23,13 +23,17 @@ const WatchList = () => {
         label: "Price",
         data: watchlist.map((stock) => stock.price),
         backgroundColor: [
-          "rgba(255, 99, 133, 0.5)",
-          "rgba(54, 162, 234, 0.5)",
-          "rgba(255, 206, 85, 0.5)",
-          "rgba(75, 192, 193, 0.5)",
-          "rgba(153, 102, 254, 0.5)",
-          "rgba(255, 159, 65, 0.5)",
-        ],
+          "rgba(0, 209, 158, 0.7)",
+          "rgba(255, 71, 87, 0.7)",
+          "rgba(30, 144, 255, 0.7)",
+          "rgba(255, 165, 2, 0.7)",
+          "rgba(190, 46, 221, 0.7)",
+          "rgba(47, 53, 66, 0.7)",
+          "rgba(255, 234, 0, 0.7)",
+          "rgba(0, 210, 211, 0.8)",
+          "rgba(255, 159, 243, 0.7)",
+          "rgba(164, 176, 190, 0.7)"
+        ]
       },
     ],
   };
@@ -90,7 +94,6 @@ const WatchListActions = ({ uid }) => {
 
   return (
     <span className="actions">
-      {/* BUY / SELL GROUP */}
       <div className="trade-buttons">
         <Tooltip title="Buy (B)" arrow TransitionComponent={Grow}>
           <button
@@ -111,7 +114,6 @@ const WatchListActions = ({ uid }) => {
         </Tooltip>
       </div>
 
-      {/* ICON GROUP */}
       <div className="icon-buttons">
         <Tooltip title="Analytics (A)" arrow TransitionComponent={Grow}>
           <button className="icon-btn">

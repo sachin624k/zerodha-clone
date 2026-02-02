@@ -138,7 +138,6 @@ code {
   color: #c9c9c9;
 }
 
-/* sudo selectors */
 .btn-blue:hover {
   background: #74a7fa;
 }
@@ -244,7 +243,6 @@ code {
   color: rgb(72, 194, 55);
 }
 
-/* sudo selector */
 .item:hover {
   cursor: pointer;
 }
@@ -323,8 +321,6 @@ hr {
   font-size: 0.8rem;
   font-weight: 300;
 }
-
-/* sudo selectors */
 
 .menu:hover {
   color: rgb(245, 104, 52);
@@ -472,7 +468,6 @@ hr {
   color: rgb(72, 194, 55);
 }
 
-/* sudo selector */
 .item:hover {
   cursor: pointer;
 }
@@ -627,7 +622,6 @@ hr {
   color: rgb(146, 146, 146);
 }
 
-/* sudo selectors */
 .index:hover {
   cursor: pointer;
 }
@@ -817,7 +811,6 @@ hr {
   cursor: move;
 }
 
-/* TODO */
 .list li::before {
   content: "";
   background: transparent;
@@ -842,14 +835,12 @@ hr {
   background-color: rgb(212, 212, 212);
 }
 
-/* --- Topbar & Navbar Alignment Fixes --- */
-
 .topbar-container {
   width: 100%;
-  height: 60px; /* Using fixed height for consistency */
+  height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pushes indices left, menu right */
+  justify-content: space-between;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
   background-color: #fff;
   padding: 0 20px;
@@ -869,9 +860,9 @@ hr {
 }
 
 .menu-container {
-  flex: 1; /* Changed from flex-basis 68% to flex 1 */
+  flex: 1;
   display: flex;
-  justify-content: flex-end; /* Aligns menu items to the right */
+  justify-content: flex-end;
   align-items: center;
   height: 100%;
 }
@@ -924,14 +915,271 @@ hr {
   color: #f56834;
 }
 
-/* Fix for profile alignment */
 .profile {
   display: flex;
   align-items: center;
   margin-left: 20px;
 }
 
-/* Ensure body doesn't cause overflow */
 body {
   overflow-x: hidden;
 }
+
+.orders-container {
+  padding: 20px 30px;
+  background: #fff;
+  min-height: 100%;
+}
+
+.orders-header {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.order-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.order-table th {
+  color: #9b9b9b;
+  font-weight: 400;
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.order-table td {
+  padding: 15px 10px;
+  border-bottom: 1px solid #f8f8f8;
+  color: #444;
+  text-align: center;
+}
+
+.order-row:hover {
+  background-color: #fcfcfc;
+}
+
+.instrument {
+  font-weight: 500;
+  color: #444 !important;
+}
+
+.type-buy, .type-sell {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.type-buy {
+  background-color: #e3f2fd;
+  color: #4184f3;
+  border: 1px solid #bbdefb;
+}
+
+.type-sell {
+  background-color: #fbe9e7;
+  color: #ff5722;
+  border: 1px solid #ffccbc;
+}
+
+.badge-complete {
+  font-size: 10px;
+  color: #4caf50;
+  background: #e8f5e9;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.no-orders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 60vh;
+}
+
+.empty-state p {
+  color: #9b9b9b;
+  margin: 20px 0;
+}
+
+.align-left { text-align: left !important; }
+.align-right { text-align: right !important; }
+
+.funds-view {
+  padding: 30px 40px;
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+.funds-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #f1f1f1;
+  margin-bottom: 30px;
+}
+
+.promo-text { display: flex; align-items: center; gap: 12px; }
+.upi-tag { 
+  background: #e3f2fd; 
+  color: #4184f3; 
+  font-size: 10px; 
+  font-weight: 700; 
+  padding: 2px 6px; 
+  border-radius: 3px;
+}
+.promo-text p { color: #666; font-size: 14px; margin: 0; }
+
+.funds-actions { display: flex; gap: 10px; }
+
+.btn-action {
+  padding: 10px 24px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btn-add { background-color: #4caf50; color: #fff; }
+.btn-withdraw { background-color: #4184f3; color: #fff; }
+.btn-action:hover { opacity: 0.9; }
+
+.funds-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; }
+
+.section-type {
+  font-size: 18px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 25px;
+}
+
+.summary-card {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.label { display: block; color: #9b9b9b; font-size: 13px; margin-bottom: 8px; }
+.val { font-size: 26px; font-weight: 300; margin: 0; color: #444; }
+.primary-blue { color: #4184f3; }
+
+.details-list .list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.border-line { height: 1px; background: #eee; margin: 15px 0; }
+.list-item.bold { font-weight: 600; color: #444; border-top: 1px solid #eee; padding-top: 15px; }
+
+.commodity-empty {
+  height: 300px;
+  border: 1px dashed #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.empty-box { text-align: center; }
+.empty-box p { color: #999; font-size: 14px; margin-bottom: 20px; }
+
+.btn-outline {
+  border: 1px solid #4184f3;
+  color: #4184f3;
+  padding: 8px 20px;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.holdings-container {
+  padding: 20px 40px;
+  max-width: 1200px;
+}
+
+.holdings-header {
+  border-bottom: 1px solid #f1f1f1;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+  border-left: 3px solid #4184f3;
+  padding-left: 12px;
+}
+
+.section-title.small { margin-top: 40px; margin-bottom: 15px; }
+
+.kite-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.kite-table th {
+  padding: 12px 15px;
+  color: #9b9b9b;
+  font-size: 12px;
+  font-weight: 400;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.kite-table td {
+  padding: 16px 15px;
+  border-bottom: 1px solid #fcfcfc;
+  font-size: 13px;
+  color: #444;
+}
+
+.table-row:hover { background-color: #fbfbfb; cursor: pointer; }
+
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+
+.instrument-name {
+  color: #4184f3;
+  font-weight: 500;
+}
+
+.text-green { color: #4caf50; font-weight: 500; }
+.text-red { color: #df514c; font-weight: 500; }
+
+.purchase-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.purchase-card {
+  background: #f1f8ff;
+  border: 1px solid #e1effe;
+  padding: 8px 16px;
+  border-radius: 4px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.p-name { font-weight: 600; color: #444; font-size: 12px; }
+.p-qty { color: #4184f3; font-size: 11px; font-weight: 700; }
+
+.graph-wrapper {
+  background: #fafafa;
+  padding: 30px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+

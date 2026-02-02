@@ -13,37 +13,45 @@ const Orders = () => {
 
   if (orders.length === 0) {
     return (
-      <div className="orders">
-        <div className="no-orders">
-          <p>You haven't placed any orders</p>
+      <div className="orders-container no-orders">
+        <div className="empty-state">
+          <img src="/no-orders.svg" alt="No orders" style={{ width: '100px', opacity: 0.5 }} />
+          <p>You haven't placed any orders yet</p>
+          <button className="btn-blue" onClick={() => window.location.href='/'}>Get started</button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="orders">
-      <h3 className="title">Orders ({orders.length})</h3>
+    <div className="orders-container">
+      <div className="orders-header">
+        <h3 className="title">Orders ({orders.length})</h3>
+      </div>
 
       <div className="order-table">
         <table>
           <thead>
             <tr>
-              <th>Instrument</th>
-              <th>Qty</th>
-              <th>Price</th>
-              <th>Mode</th>
+              <th className="align-left">Instrument</th>
+              <th>Qty.</th>
+              <th>Avg. price</th>
+              <th>Status</th>
+              <th className="align-right">Type</th>
             </tr>
           </thead>
 
           <tbody>
             {orders.map((order, index) => (
-              <tr key={index}>
-                <td>{order.name}</td>
-                <td>{order.qty}</td>
-                <td>{order.price}</td>
-                <td className={order.mode === "BUY" ? "profit" : "loss"}>
-                  {order.mode}
+              <tr key={index} className="order-row">
+                <td className="instrument align-left">{order.name}</td>
+                <td className="qty">{order.qty}</td>
+                <td className="price">{order.price.toFixed(2)}</td>
+                <td className="status"><span className="badge-complete">COMPLETE</span></td>
+                <td className="align-right">
+                  <span className={order.mode === "BUY" ? "type-buy" : "type-sell"}>
+                    {order.mode}
+                  </span>
                 </td>
               </tr>
             ))}
