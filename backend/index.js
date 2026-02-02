@@ -17,18 +17,15 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://zerodha-clone-theta-orpin.vercel.app",
-      "https://zerodha-dashboard-psi.vercel.app",
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  })
-);
+app.use(cors({
+  origin: [
+    "https://zerodha-clone-theta-orpin.vercel.app",
+    "https://zerodha-dashboard-psi.vercel.app",
+  ],
+  credentials: true,
+}));
+
+app.options("*", cors());
 
 app.use(bodyParser.json());
 
