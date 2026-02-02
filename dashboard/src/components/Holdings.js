@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import { VerticalGraph } from "./VerticalGraph";
 
 const Holdings = () => {
@@ -7,9 +7,9 @@ const Holdings = () => {
   const [newOrders, setNewOrders] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allHoldings").then((res) => setAllHoldings(res.data));
+    api.get("/allHoldings").then((res) => setAllHoldings(res.data));
 
-    axios.get("http://localhost:3002/allOrders").then((res) => {
+    api.get("/allOrders").then((res) => {
       const netMap = {};
       res.data.forEach((order) => {
         if (!netMap[order.name]) netMap[order.name] = 0;

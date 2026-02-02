@@ -22,8 +22,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://your-frontend.vercel.app",
-      "https://your-dashboard.vercel.app"
+      "https://zerodha-clone-theta-orpin.vercel.app",
+      "https://zerodha-dashboard-psi.vercel.app"
     ],
     credentials: true,
   })

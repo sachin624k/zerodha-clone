@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api"; // ✅ use shared api
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
@@ -19,16 +19,17 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:3002/auth/signup",
-        { email, username, password },
-        { withCredentials: true }
-      );
+      const { data } = await api.post("/auth/signup", {
+        email,
+        username,
+        password,
+      });
 
       if (data.success) {
         toast.success("Signup successful");
         setTimeout(() => {
-          window.location.href = "http://localhost:3001";
+          window.location.href =
+            process.env.REACT_APP_DASHBOARD_URL;
         }, 800);
       } else {
         toast.error(data.message);
@@ -42,43 +43,51 @@ const Signup = () => {
     <div className="auth-container">
       <div className="auth-card">
         <h2 className="auth-title">Open a new account</h2>
+
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="input-group">
-            <input 
-              name="email" 
+            <input
+              name="email"
               type="email"
-              placeholder="Email address" 
-              value={email} 
-              onChange={handleChange} 
+              placeholder="Email address"
+              value={email}
+              onChange={handleChange}
               required
             />
           </div>
 
           <div className="input-group">
-            <input 
-              name="username" 
-              placeholder="Username" 
-              value={username} 
-              onChange={handleChange} 
+            <input
+              name="username"
+              placeholder="Username"
+              value={username}
+              onChange={handleChange}
               required
             />
           </div>
 
           <div className="input-group">
-            <input 
-              type="password" 
-              name="password" 
-              placeholder="Password" 
-              value={password} 
-              onChange={handleChange} 
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={handleChange}
               required
             />
           </div>
 
-          <button type="submit" className="auth-submit-btn">Continue</button>
+          <button type="submit" className="auth-submit-btn">
+            Continue
+          </button>
 
           <div className="auth-footer">
-            <p>Already have an account? <Link to="/auth/login" className="auth-link-bold">Login</Link></p>
+            <p>
+              Already have an account?{" "}
+              <Link to="/auth/login" className="auth-link-bold">
+                Login
+              </Link>
+            </p>
           </div>
         </form>
       </div>

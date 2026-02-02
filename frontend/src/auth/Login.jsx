@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -10,16 +10,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:3002/auth/login",
-        { email, password },
-        { withCredentials: true }
-      );
+      const { data } = await api.post("/auth/login", { email, password });
 
       if (data.success) {
         toast.success("Login successful");
         setTimeout(() => {
-          window.location.href = "http://localhost:3001/"; 
+          window.location.href =
+            process.env.REACT_APP_DASHBOARD_URL;
         }, 800);
       } else {
         toast.error(data.message);
@@ -54,11 +51,20 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="auth-submit-btn">Login</button>
+          <button type="submit" className="auth-submit-btn">
+            Login
+          </button>
 
           <div className="auth-footer">
-            <Link to="/auth/signup" className="auth-link">Forgot user ID or password?</Link>
-            <p>New here? <Link to="/auth/signup" className="auth-link-bold">Create account</Link></p>
+            <Link to="/auth/signup" className="auth-link">
+              Forgot user ID or password?
+            </Link>
+            <p>
+              New here?{" "}
+              <Link to="/auth/signup" className="auth-link-bold">
+                Create account
+              </Link>
+            </p>
           </div>
         </form>
       </div>

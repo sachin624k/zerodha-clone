@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import Dashboard from "./Dashboard";
 import TopBar from "./TopBar";
 
@@ -10,11 +10,7 @@ const Home = () => {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        const res = await axios.post(
-          `${process.env.REACT_APP_API_URL}/auth`,
-          {},
-          { withCredentials: true }
-        );
+        const res = await api.post("/auth");
 
         if (res.data.status) {
           setIsAuthenticated(true);

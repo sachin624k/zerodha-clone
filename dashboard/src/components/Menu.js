@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
 
   const handleLogout = async () => {
     try {
-      await axios.post(
-        "http://localhost:3002/auth/logout",
-        {},
-        { withCredentials: true }
-      );
-    } finally {
-      window.location.replace("http://localhost:3000");
+      await api.post("/auth/logout");
+      window.location.replace(process.env.REACT_APP_FRONTEND_URL);
+    } catch (err) {
+      console.error(err);
     }
   };
+
 
   const menuClass = "menu";
   const activeMenuClass = "menu selected";

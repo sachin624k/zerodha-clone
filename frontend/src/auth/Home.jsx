@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -9,11 +9,7 @@ const Home = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const { data } = await axios.post(
-          "http://localhost:3002/auth",
-          {},
-          { withCredentials: true }
-        );
+        const { data } = await api.post("/auth");
 
         if (!data.status) {
           navigate("/auth/login", { replace: true });
@@ -29,12 +25,7 @@ const Home = () => {
   }, [navigate]);
 
   const logout = async () => {
-    await axios.post(
-      "http://localhost:3002/auth/logout",
-      {},
-      { withCredentials: true }
-    );
-
+    await api.post("/auth/logout");
     navigate("/", { replace: true });
   };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 import Apps from "./Apps";
 import Funds from "./Funds";
@@ -17,11 +17,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.post(
-          "http://localhost:3002/auth",
-          {},
-          { withCredentials: true }
-        );
+        const res = await api.post("/auth");
 
         if (res.data.status) {
           setUsername(res.data.user); 
