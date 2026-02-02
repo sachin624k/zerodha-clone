@@ -19,7 +19,12 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://your-frontend.vercel.app",
+      "https://your-dashboard.vercel.app"
+    ],
     credentials: true,
   })
 );
@@ -306,8 +311,15 @@ app.post("/newOrder", async (req, res) => {
 
 app.use("/auth", authRoute);
 
-app.listen(PORT, () => {
-  console.log(`App started on port ${PORT}`);
-  mongoose.connect(uri);
-  console.log("DB connected!");
-});
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log("DB connected!");
+
+    app.listen(PORT, () => {
+      console.log(`App started on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("DB connection failed:", err.message);
+  });
