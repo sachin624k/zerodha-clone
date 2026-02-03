@@ -5,39 +5,34 @@ import TopBar from "./TopBar";
 
 const Home = () => {
   const [authChecked, setAuthChecked] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const verifyAuth = async () => {
+      const frontendURL = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
+
       try {
         const res = await api.post("/auth");
-
         if (res.data.status) {
-          setIsAuthenticated(true);
+          setUser(res.data.user);
         } else {
-          window.location.replace(
-            `${process.env.REACT_APP_FRONTEND_URL}/auth/login`
-          );
+          window.location.replace(`${frontendURL}/auth/login`);
         }
       } catch (err) {
-        window.location.replace(
-          `${process.env.REACT_APP_FRONTEND_URL}/auth/login`
-        );
+        window.location.replace(`${frontendURL}/auth/login`);
       } finally {
         setAuthChecked(true);
       }
     };
-
     verifyAuth();
   }, []);
 
-  if (!authChecked) return null;
-  if (!isAuthenticated) return null;
+  if (!authChecked) return <div>Loading...</div>;
 
   return (
     <>
       <TopBar />
-      <Dashboard />
+      <Dashboard username={user} /> 
     </>
   );
 };
