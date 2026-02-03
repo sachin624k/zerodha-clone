@@ -5,21 +5,25 @@ import TopBar from "./TopBar";
 
 const Home = () => {
   const [authChecked, setAuthChecked] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const verifyAuth = async () => {
-      const frontendURL = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
-
       try {
         const res = await api.post("/auth");
+        console.log("Auth Response:", res.data);
+
         if (res.data.status) {
+          setIsAuthenticated(true);
           setUser(res.data.user);
         } else {
-          window.location.replace(`${frontendURL}/auth/login`);
+          console.warn("Session invalid, redirecting...");
+          window.location.replace(`${process.env.REACT_APP_FRONTEND_URL}/auth/login`);
         }
       } catch (err) {
-        window.location.replace(`${frontendURL}/auth/login`);
+        console.error("Auth check failed:", err);
+        window.location.replace(`${process.env.REACT_APP_FRONTEND_URL}/auth/login`);
       } finally {
         setAuthChecked(true);
       }
@@ -28,6 +32,8 @@ const Home = () => {
   }, []);
 
   if (!authChecked) return <div>Loading...</div>;
+
+  if (!isAuthenticated) return null;
 
   return (
     <>
