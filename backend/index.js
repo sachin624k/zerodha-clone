@@ -22,7 +22,9 @@ app.use(cors({
     "https://zerodha-clone-theta-orpin.vercel.app",
     "https://zerodha-dashboard-psi.vercel.app",
   ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 app.use(bodyParser.json());
